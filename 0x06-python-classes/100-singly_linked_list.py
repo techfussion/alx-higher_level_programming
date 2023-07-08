@@ -22,11 +22,10 @@ class Node:
 
     @data.setter
     def data(self, value):
-        if isinstance(value, (int)):
-            self.__data = value
-            return
+        if not isinstance(value, (int)):
+            raise TypeError("data must be an integer")
 
-        raise TypeError("data must be an integer")
+        self.__data = value
 
     @property
     def next_node(self):
