@@ -1,13 +1,14 @@
 #!/usr/bin/python3
-"""Contains function that divides all element of a matrix"""
+# 2-matrix_divided.py
+"""Defines a matrix division function."""
 
 
 def matrix_divided(matrix, div):
-    """Validates and divide matrix(matrix) by its divident(div).
+    """Divide all elements of a matrix.
 
-    Attributes:
-        matrix (list of lists): list of lists containing int/float dt.
-        div (int, flaot): value to divide the matrix by (diivdent)..
+    Args:
+        matrix (list): A list of lists of ints or floats.
+        div (int/float): The divisor.
     Raises:
         TypeError: If the matrix contains non-numbers.
         TypeError: If the matrix contains rows of different sizes.
@@ -16,25 +17,20 @@ def matrix_divided(matrix, div):
     Returns:
         A new matrix representing the result of the division.
     """
-
-    for item in matrix:
-        if not isinstance(item, list) or
-                any(not isinstance(i, (int, float)) for i in item):
-            raise TypeError("matrix must be a matrix (list of lists) of"
-                "integers/floats")
+    if (not isinstance(matrix, list) or matrix == [] or
+            not all(isinstance(row, list) for row in matrix) or
+            not all((isinstance(ele, int) or isinstance(ele, float))
+                    for ele in [num for row in matrix for num in row])):
+        raise TypeError("matrix must be a matrix (list of lists) of "
+                        "integers/floats")
 
     if not all(len(row) == len(matrix[0]) for row in matrix):
         raise TypeError("Each row of the matrix must have the same size")
 
-    if not isinstance(div, (int, float)):
+    if not isinstance(div, int) and not isinstance(div, float):
         raise TypeError("div must be a number")
 
     if div == 0:
         raise ZeroDivisionError("division by zero")
 
-    new_matrix = []
-
-    for item in matrix:
-        new_matrix.append([round(res/div, 2) for res in item])
-
-    return new_matrix
+    return ([list(map(lambda x: round(x / div, 2), row)) for row in matrix])
